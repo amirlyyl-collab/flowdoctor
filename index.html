@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#090d17"><title>FlowDoctor — Workflow health, without guesswork</title>
+<style>
+:root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial,sans-serif;color:#e9edf7;background:#090d17;font-synthesis:none}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse 58% 34% at 48% -8%,#172749aa,transparent 75%),#090d17}button,textarea,input{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.4}a{color:inherit;text-decoration:none}.shell{max-width:1220px;margin:auto;padding:0 30px}.nav{height:80px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff13}.brand{display:flex;align-items:center;gap:10px;font-weight:760;font-size:21px;letter-spacing:-.7px}.mark{background:#d6ff68;color:#0a1020;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-size:24px;font-weight:850;box-shadow:0 0 25px #b9fb5427}.nav-right{display:flex;gap:26px;align-items:center;color:#a1aabd;font-size:13px}.nav-right a:hover{color:#fff}.build{border:1px solid #6b7e533b;color:#d6ff68;border-radius:30px;padding:7px 10px;font-size:11px;font-weight:700;letter-spacing:.4px}.hero{padding:65px 0 39px;text-align:center}.eyebrow{display:inline-flex;gap:8px;align-items:center;border:1px solid #d6ff6831;color:#c5ee86;background:#b8ff5b0c;padding:9px 14px;border-radius:50px;font-size:11px;font-weight:770;letter-spacing:1.5px}.dot{width:6px;height:6px;background:#d6ff68;display:inline-block;border-radius:50%;box-shadow:0 0 10px #d6ff68}.hero h1{font-size:clamp(37px,5.4vw,66px);letter-spacing:-3.4px;line-height:1.08;margin:24px auto 15px;max-width:890px;font-weight:770}.hero h1 span{color:#d6ff68}.hero p{max-width:590px;margin:0 auto;color:#9ca7bd;font-size:15.5px;line-height:1.75}.mini-features{display:flex;justify-content:center;flex-wrap:wrap;gap:23px;margin-top:25px;color:#98a5b9;font-size:12px}.mini-features b{color:#d6ff68}.workspace{display:grid;grid-template-columns:244px minmax(0,1fr);min-height:540px;border:1px solid #273142;background:#101622;box-shadow:0 22px 90px #0007;border-radius:17px;overflow:hidden;margin:13px 0 66px}.side{border-right:1px solid #273142;padding:24px 14px;background:#0e1420}.side-title{color:#68758e;text-transform:uppercase;letter-spacing:1.3px;font-size:10px;font-weight:800;margin:6px 11px 14px}.side-link{width:100%;display:flex;align-items:center;gap:12px;padding:12px;border-radius:8px;color:#91a0b6;font-size:13px;border:0;background:none;text-align:left}.side-link.active{background:#d6ff6817;color:#d6ff68}.side-link:not(.active):hover{background:#ffffff0b;color:#fff}.side-link svg{width:17px;height:17px;flex-shrink:0}.side-bottom{margin-top:180px;padding:12px;color:#78869f;font-size:12px;line-height:1.7;border-top:1px solid #ffffff13}.main{padding:26px 30px 36px;min-width:0}.topline{display:flex;align-items:center;justify-content:space-between;gap:12px}.page-title{font-weight:720;letter-spacing:-.45px;font-size:21px}.session{font-size:11px;color:#9faac0;border:1px solid #384256;padding:7px 10px;border-radius:7px}.page-desc{margin:7px 0 24px;color:#8998ad;font-size:13px}.tabs{display:flex;gap:6px;border-bottom:1px solid #273142;margin-bottom:22px}.tab{padding:12px 19px;color:#8b9ab1;background:none;border:0;border-bottom:2px solid transparent;font-size:13px;font-weight:650}.tab.active{color:#d6ff68;border-bottom-color:#d6ff68}.upload{padding:25px 20px;border:1.5px dashed #465264;border-radius:12px;background:#161d2a;text-align:center;transition:.15s}.upload.drag{border-color:#d6ff68;background:#d6ff6813}.upload-ic{margin:auto auto 12px;background:#293343;color:#d6ff68;border-radius:13px;width:46px;height:46px;display:grid;place-items:center;font-size:24px}.upload strong{display:block;font-size:14px}.sub{color:#8593a9;font-size:12px;line-height:1.65;margin:6px 0 14px}.choose{border:1px solid #485364;color:#dce5f5;background:#263141;border-radius:7px;padding:9px 16px;font-weight:650;font-size:12px;display:inline-block;cursor:pointer}.choose:hover{background:#354356}.choose input{display:none}.file-info{color:#d6ff68;font-size:12px;margin-top:12px;min-height:16px}.divider{display:flex;align-items:center;gap:14px;margin:20px 0;color:#66748b;font-size:11px}.divider:before,.divider:after{content:"";height:1px;background:#2a3446;flex:1}.paste-label{font-size:12px;font-weight:650;color:#c3cedd;margin:0 0 9px;display:block}textarea{width:100%;height:122px;resize:vertical;border:1px solid #344055;background:#0b111c;border-radius:9px;color:#c9d7e9;padding:14px;font-size:12px;line-height:1.5;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;outline:none}textarea:focus{border-color:#9ab957}textarea::placeholder{color:#54647c}.actionbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:18px 0 0;flex-wrap:wrap}.actions{display:flex;gap:9px;flex-wrap:wrap}.primary{background:#d6ff68;color:#0b1308;border:1px solid #d6ff68;border-radius:8px;padding:11px 19px;font-size:12px;font-weight:800;box-shadow:0 5px 20px #d6ff6817}.primary:hover{background:#e3ff98}.outline{background:#1d2736;border:1px solid #3a485c;color:#e0e8f4;padding:11px 15px;border-radius:8px;font-size:12px;font-weight:650}.outline:hover{background:#2a3749}.privacy{display:flex;gap:7px;align-items:center;font-size:11px;color:#7f8fa5}.privacy svg{color:#c5e989}.notice{font-size:12px;margin-top:15px;padding:10px 12px;border:1px solid #3a4658;border-radius:8px;color:#abbacf;background:#172030;display:none}.notice.error{display:block;color:#ffb8b8;border-color:#8c454e}.notice.ok{display:block;color:#c7f0a1;border-color:#476a46}.results{display:none}.results.visible{display:block}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin:20px 0}.stat{border:1px solid #303b4d;background:#151d2a;border-radius:10px;padding:17px}.stat small{display:block;color:#8393aa;font-size:11px}.stat b{display:block;font-size:28px;margin-top:7px;letter-spacing:-1px}.stat .accent{color:#d6ff68}.results-header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:22px}.results-header h2{font-size:20px;letter-spacing:-.4px;margin:0}.workflow-meta{color:#8d9bb0;font-size:12px;margin-top:6px}.filters{display:flex;gap:7px;flex-wrap:wrap;margin:22px 0 14px}.filter{padding:7px 12px;background:#151d2a;color:#9caabd;border:1px solid #303a4d;border-radius:7px;font-size:11px}.filter.active{background:#d6ff681b;color:#d6ff68;border-color:#9ab35a}.issue{border:1px solid #344052;background:#151d29;border-radius:10px;padding:16px 18px;margin-bottom:10px}.issue-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.issue h3{font-size:13px;font-weight:720;letter-spacing:-.1px;margin:0 0 8px}.issue p{font-size:12px;color:#9daabd;line-height:1.7;margin:9px 0}.sev{font-size:10px;font-weight:800;border-radius:5px;padding:5px 9px;flex-shrink:0;background:#202a3a}.sev-high,.sev-critical{color:#ff9d9d;background:#ff55551a}.sev-medium{color:#ffcb80;background:#ffa84317}.sev-low{color:#95b5ec;background:#78a9ff14}.issue-meta{color:#768ba6;font-size:11px}.fix{background:#d6ff6809;border-left:2px solid #9dd14d;padding:10px 12px;border-radius:0 6px 6px 0;font-size:12px;color:#c8d8be;line-height:1.5}.empty{border:1px dashed #394458;padding:35px;text-align:center;color:#8d9bb0;border-radius:10px;font-size:13px}.disclaimer{color:#7f8fa5;font-size:11px;line-height:1.65;margin-top:18px}.section{padding:0 0 72px}.section h2{text-align:center;font-size:29px;letter-spacing:-1px;margin:0 0 9px}.section>p{text-align:center;color:#8997ab;font-size:13px;margin:0 0 28px}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.feature-card{border:1px solid #283345;background:#111825;border-radius:12px;padding:24px}.feature-icon{font-size:23px;margin-bottom:15px}.feature-card h3{font-size:15px;margin:0 0 9px}.feature-card p{font-size:12px;color:#8999af;line-height:1.7;margin:0}.bottom{border-top:1px solid #253043;padding:25px 0 45px;display:flex;justify-content:space-between;gap:20px;color:#7f8da4;font-size:11px}.hidden{display:none!important}.toast{position:fixed;bottom:22px;right:22px;padding:12px 18px;background:#d6ff68;color:#0e1707;font-size:12px;font-weight:700;border-radius:9px;box-shadow:0 8px 30px #0008;display:none;z-index:30}.toast.show{display:block}@media(max-width:800px){.workspace{grid-template-columns:1fr}.side{display:none}.hero{padding:45px 0 25px}.hero h1{letter-spacing:-2px}.cards{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.nav-right a{display:none}.main{padding:22px 18px}.shell{padding:0 16px}.bottom{flex-wrap:wrap}}@media(max-width:430px){.stats{grid-template-columns:repeat(2,1fr)}.mini-features{gap:10px;font-size:10px}.hero p{font-size:13px}.actionbar .actions{width:100%}.primary{flex:1}.nav{height:68px}}
+</style></head>
+<body><div class="shell">
+<nav class="nav"><a href="#" class="brand"><div class="mark">+</div> FlowDoctor</a><div class="nav-right"><a href="#app">Workspace</a><a href="#features">How it works</a><span class="build">PUBLIC BETA · LOCAL</span></div></nav>
+<section class="hero"><span class="eyebrow"><i class="dot"></i> THE PRE-DEPLOYMENT CHECK FOR N8N</span><h1>Before you ship it,<br><span>diagnose it.</span></h1><p>Catch broken connections, risky configurations, and reliability gaps in your n8n workflows. A second pair of eyes before production.</p><div class="mini-features"><span><b>✓</b> No account required</span><span><b>✓</b> Runs in your browser</span><span><b>✓</b> Actionable findings</span></div></section>
+<div class="workspace" id="app"><aside class="side"><div class="side-title">WORKSPACE</div><button class="side-link active" id="nav-analyze"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 15a8 8 0 1 1 11 5M4 15v5h5M11 7v5l3 2"/></svg>Workflow analyzer</button><button class="side-link" id="nav-report"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3h7l5 5v13H7zM14 3v5h5M10 13h6M10 17h6"/></svg>Latest report</button><div class="side-bottom"><div style="color:#bdcdde;margin-bottom:6px;font-weight:700">✧ Privacy by design</div>No workflow data is sent to a server. Your files are analyzed on this device only.<br><br><span style="color:#d6ff68">v0.2 · Static analyzer</span></div></aside>
+<main class="main"><div id="editor"><div class="topline"><div class="page-title">Workflow analyzer</div><span class="session">● Local session</span></div><p class="page-desc">Upload an n8n export or paste its JSON to run a pre-deployment review.</p><div class="tabs"><button class="tab active" id="tab-upload">Upload workflow</button><button class="tab" id="tab-paste">Paste JSON</button></div>
+<div id="upload-area"><div class="upload" id="dropzone"><div class="upload-ic">⇧</div><strong>Drag & drop your workflow JSON here</strong><div class="sub">Supports exported .json workflows from n8n · Max 2 MB</div><label class="choose">Browse files<input id="file" type="file" accept=".json,application/json"></label><div id="filename" class="file-info"></div></div><div class="divider">OR TRY IT OUT</div><p class="sub" style="text-align:center;margin-bottom:0">Don't have a workflow ready? Try our sample with intentional issues.</p></div>
+<div id="paste-area" class="hidden"><label class="paste-label" for="paste">Your n8n workflow JSON</label><textarea id="paste" spellcheck="false" placeholder='{"name":"My workflow","nodes":[],"connections":{}}'></textarea><div class="sub">Paste the full export including nodes and connections. Avoid sharing private workflow files.</div></div>
+<div class="actionbar"><div class="actions"><button class="primary" id="analyze">✦ Analyze workflow &nbsp; →</button><button class="outline" id="sample">Load sample</button></div><div class="privacy">♧ Private, in-browser analysis</div></div><div id="notice" class="notice" role="status"></div></div>
+<div class="results" id="results"><div class="results-header"><div><h2 id="r-name">Workflow report</h2><div class="workflow-meta" id="r-meta"></div></div><div class="actions"><button class="outline" id="back">← New analysis</button><button class="outline" id="download">↓ Export report</button></div></div><div class="stats"><div class="stat"><small>Nodes checked</small><b id="nodes">0</b></div><div class="stat"><small>Connections</small><b id="connections">0</b></div><div class="stat"><small>Issues flagged</small><b class="accent" id="issues-count">0</b></div><div class="stat"><small>High + critical</small><b id="high">0</b></div></div><div class="filters" id="filters"><button class="filter active" data-filter="All">All issues</button><button class="filter" data-filter="Critical">Critical</button><button class="filter" data-filter="High">High</button><button class="filter" data-filter="Medium">Medium</button><button class="filter" data-filter="Low">Low</button></div><div id="issue-list"></div><div class="disclaimer">Important: This is a static review, not runtime testing, security certification, or a guarantee that your workflow will function correctly. Heuristic findings can be false positives. We do not run your workflow.</div></div>
+</main></div>
+<section class="section" id="features"><h2>Fewer surprises. Better workflows.</h2><p>Practical safeguards for people building automations that matter.</p><div class="cards"><div class="feature-card"><div class="feature-icon">⌘</div><h3>Workflow structure checks</h3><p>Flag broken references, duplicate node names, disconnected paths, and incomplete structures.</p></div><div class="feature-card"><div class="feature-icon">◇</div><h3>Configuration risk signals</h3><p>Identify potentially risky patterns such as missing retries and suspicious secret-like field names.</p></div><div class="feature-card"><div class="feature-icon">↗</div><h3>Actionable reports</h3><p>Get severity, affected nodes, evidence type, suggested next steps, and an exportable JSON report.</p></div></div></section>
+<footer class="bottom"><span>© FlowDoctor · Experimental beta</span><span>Built for n8n creators · Not affiliated with n8n</span><span>AI recommendations and payments are not enabled yet.</span></footer></div><div id="toast" class="toast" role="status"></div>
+<script>
+const MAX_BYTES = 2 * 1024 * 1024;
+const isObject = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
+
+function analyzeText(text) {
+  if (new TextEncoder().encode(text).length > MAX_BYTES) throw new Error('File exceeds the 2 MB limit.');
+  let data;
+  try { data = JSON.parse(text); } catch { throw new Error('Invalid JSON. Export a workflow from n8n and try again.'); }
+  return analyzeWorkflow(data);
+}
+
+function analyzeWorkflow(data) {
+  if (!isObject(data) || !Array.isArray(data.nodes) || !isObject(data.connections)) {
+    throw new Error('This does not look like an n8n workflow: nodes[] and connections{} are required.');
+  }
+  if (data.nodes.length > 5000) throw new Error('More than 5,000 nodes are not supported.');
+  const issues = [];
+  const add = (rule, severity, node, title, explanation, fix, certainty = 'deterministic') =>
+    issues.push({ id: `${rule}-${issues.length + 1}`, rule, severity, node, title, explanation, fix, certainty });
+  const names = new Map();
+  const ids = new Set();
+  const nodes = data.nodes;
+  for (const [index, n] of nodes.entries()) {
+    if (!isObject(n) || typeof n.name !== 'string' || !n.name.trim() || typeof n.type !== 'string') {
+      add('INVALID_NODE', 'High', `Node ${index + 1}`, 'Invalid node structure', 'A node is missing its name or type.', 'Check the exported node fields.');
+      continue;
+    }
+    names.set(n.name, (names.get(n.name) || 0) + 1);
+    if (n.id != null) {
+      if (ids.has(n.id)) add('DUPLICATE_ID', 'High', n.name, 'Duplicate node ID', 'Multiple nodes share an ID.', 'Assign unique node IDs.');
+      ids.add(n.id);
+    }
+  }
+  for (const [name, count] of names) if (count > 1) add('DUPLICATE_NAME', 'High', name, 'Duplicate node name', `${count} nodes have the same name; connections may be ambiguous.`, 'Rename nodes uniquely.');
+  const edges = new Map();
+  const indegree = new Map([...names.keys()].map(name => [name, 0]));
+  for (const [source, outputs] of Object.entries(data.connections)) {
+    if (!names.has(source)) {
+      add('UNKNOWN_SOURCE', 'High', source, 'Connection source missing', 'A connection refers to a source not present in the workflow.', 'Remove the broken connection or restore its source node.');
+    }
+    if (!isObject(outputs)) continue;
+    for (const groups of Object.values(outputs)) {
+      if (!Array.isArray(groups)) continue;
+      for (const targets of groups) {
+        if (!Array.isArray(targets)) continue;
+        for (const target of targets) {
+          if (!isObject(target) || typeof target.node !== 'string') continue;
+          if (!names.has(target.node)) {
+            add('UNKNOWN_TARGET', 'High', source, 'Connection target missing', `Target node '${target.node}' is not present.`, 'Reconnect the source to an existing node.');
+          } else {
+            if (!edges.has(source)) edges.set(source, new Set());
+            edges.get(source).add(target.node);
+            indegree.set(target.node, (indegree.get(target.node) || 0) + 1);
+          }
+        }
+      }
+    }
+  }
+  const triggerNodes = nodes.filter(n => isObject(n) && typeof n.type === 'string' && (/trigger/i.test(n.type) || /webhook/i.test(n.type)) && !n.disabled).map(n => n.name);
+  if (!nodes.length) add('EMPTY', 'Medium', 'Workflow', 'Empty workflow', 'No nodes were found.', 'Add a trigger and action nodes.');
+  if (nodes.length && !triggerNodes.length) add('NO_TRIGGER', 'Medium', 'Workflow', 'No recognizable trigger', 'No enabled trigger was identified by the simple type-name rule; manual execution or custom triggers may be intentional.', 'Confirm how the workflow is started.', 'heuristic');
+  const visited = new Set();
+  const stack = [...triggerNodes];
+  while (stack.length) {
+    const name = stack.pop();
+    if (visited.has(name)) continue;
+    visited.add(name);
+    for (const target of edges.get(name) || []) if (!visited.has(target)) stack.push(target);
+  }
+  if (triggerNodes.length) {
+    for (const n of nodes) {
+      if (isObject(n) && typeof n.name === 'string' && !n.disabled && !visited.has(n.name)) {
+        add('UNREACHABLE', 'Medium', n.name, 'Node not reachable from detected triggers', 'No connection path from an identified trigger reaches this node.', 'Review the wiring; separate or manually invoked branches may be intentional.', 'heuristic');
+      }
+    }
+  }
+  const errorConfigured = isObject(data.settings) && typeof data.settings.errorWorkflow === 'string' && data.settings.errorWorkflow.length > 0;
+  if (nodes.length && !errorConfigured) add('ERROR_WORKFLOW', 'Low', 'Workflow', 'No error workflow configured', 'The exported settings do not reference an error workflow. This may be intentional.', 'Consider an error workflow for notifications and recovery.', 'heuristic');
+  for (const n of nodes) {
+    if (!isObject(n) || typeof n.type !== 'string' || typeof n.name !== 'string') continue;
+    if (/httpRequest/i.test(n.type) && n.retryOnFail !== true) {
+      add('HTTP_RETRY', 'Low', n.name, 'HTTP request without node retry', 'Node-level retryOnFail is not enabled; retries may be handled elsewhere.', 'Consider retries/backoff for transient failures, ensuring requests are safe to repeat.', 'heuristic');
+    }
+    // Scan field names only. Never display or export sensitive field values.
+    function scanFields(value, depth = 0) {
+      if (depth > 12 || !isObject(value)) return false;
+      return Object.entries(value).some(([key, v]) => {
+        if (/^(api[_-]?key|access[_-]?token|client[_-]?secret|password|private[_-]?key)$/i.test(key) && typeof v === 'string' && v.length > 0 && !/^\{\{.*\}\}$/.test(v)) return true;
+        if (isObject(v)) return scanFields(v, depth + 1);
+        if (Array.isArray(v)) return v.some(item => isObject(item) && scanFields(item, depth + 1));
+        return false;
+      });
+    }
+    if (scanFields(n.parameters)) add('POSSIBLE_SECRET', 'High', n.name, 'Possible embedded secret', 'A sensitive-looking parameter name contains a string value. This is not proof of a live credential.', 'Review locally and use n8n credentials or environment variables where appropriate.', 'heuristic');
+  }
+  const order = { Critical: 0, High: 1, Medium: 2, Low: 3 };
+  issues.sort((a, b) => order[a.severity] - order[b.severity]);
+  return {
+    name: typeof data.name === 'string' ? data.name : 'Untitled workflow',
+    nodeCount: nodes.length,
+    connectionCount: [...edges.values()].reduce((sum, set) => sum + set.size, 0),
+    types: [...new Set(nodes.filter(isObject).map(n => n.type).filter(x => typeof x === 'string'))].sort(),
+    issues,
+    disclaimer: 'Static checks only. No execution, dependency validation or guarantee of security or correctness.'
+  };
+}
+
+const byId=id=>document.getElementById(id);
+const file=byId('file'), paste=byId('paste'), notice=byId('notice'), dropzone=byId('dropzone');
+let mode='upload',report=null,filter='All';
+function alertMsg(message,type='error'){notice.textContent=message;notice.className='notice '+type}
+function toast(message){const el=byId('toast');el.textContent=message;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2300)}
+function tab(newMode){mode=newMode;byId('tab-upload').classList.toggle('active',mode==='upload');byId('tab-paste').classList.toggle('active',mode==='paste');byId('upload-area').classList.toggle('hidden',mode!=='upload');byId('paste-area').classList.toggle('hidden',mode!=='paste');notice.className='notice'}
+byId('tab-upload').onclick=()=>tab('upload');byId('tab-paste').onclick=()=>tab('paste');
+file.addEventListener('change',()=>{byId('filename').textContent=file.files[0]?'✓ '+file.files[0].name:'';notice.className='notice'});
+for (const event of ['dragenter','dragover'])dropzone.addEventListener(event,e=>{e.preventDefault();dropzone.classList.add('drag')});
+for (const event of ['dragleave','drop'])dropzone.addEventListener(event,e=>{e.preventDefault();dropzone.classList.remove('drag')});
+dropzone.addEventListener('drop',e=>{if(e.dataTransfer.files.length){file.files=e.dataTransfer.files;byId('filename').textContent='✓ '+file.files[0].name;tab('upload')}});
+const sample={name:'Client onboarding - example',nodes:[{id:'a',name:'Webhook',type:'n8n-nodes-base.webhook',parameters:{}},{id:'b',name:'CRM request',type:'n8n-nodes-base.httpRequest',parameters:{apiKey:'DEMO-PLACEHOLDER-NOT-A-REAL-SECRET'}},{id:'c',name:'Orphan task',type:'n8n-nodes-base.set',parameters:{}}],connections:{Webhook:{main:[[{node:'CRM request',type:'main',index:0}]]},'CRM request':{main:[[{node:'Missing destination',type:'main',index:0}]]}}};
+byId('sample').onclick=()=>{tab('paste');paste.value=JSON.stringify(sample,null,2);toast('Sample loaded. Select Analyze workflow.');paste.focus()};
+byId('analyze').onclick=async()=>{try{let value;if(mode==='upload'){if(!file.files.length)throw new Error('Please select an n8n JSON file or choose Paste JSON.');if(file.files[0].size>2*1024*1024)throw new Error('Maximum file size is 2 MB.');value=await file.files[0].text()}else value=paste.value;if(!value.trim())throw new Error('Paste workflow JSON or load the sample first.');report=analyzeText(value);filter='All';showReport();}catch(err){alertMsg(err.message||'Unable to analyze this workflow.')}};
+function node(tag,text,css){const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(css)n.className=css;return n}
+function showReport(){byId('editor').classList.add('hidden');byId('results').classList.add('visible');byId('nav-analyze').classList.remove('active');byId('nav-report').classList.add('active');byId('r-name').textContent=report.name;byId('r-meta').textContent=`${report.types.length} node types · Static review · No workflow executed`;byId('nodes').textContent=report.nodeCount;byId('connections').textContent=report.connectionCount;byId('issues-count').textContent=report.issues.length;byId('high').textContent=report.issues.filter(x=>x.severity==='High'||x.severity==='Critical').length;renderIssues();window.location.hash='app'}
+function renderIssues(){const root=byId('issue-list');root.replaceChildren();document.querySelectorAll('.filter').forEach(el=>el.classList.toggle('active',el.dataset.filter===filter));const issues=report.issues.filter(x=>filter==='All'||x.severity===filter);if(!issues.length){root.append(node('div',filter==='All'?'No issues found by the currently implemented rules. Review manually before deploying.':'No issues in this severity category.','empty'));return}for(const issue of issues){const card=node('article',undefined,'issue'),top=node('div',undefined,'issue-top'),heading=node('h3',issue.title),badge=node('span',issue.severity,'sev sev-'+issue.severity.toLowerCase());top.append(heading,badge);card.append(top,node('div','Affected: '+issue.node+' · '+issue.certainty+' · '+issue.rule,'issue-meta'),node('p',issue.explanation));const fix=node('div','Suggested fix: '+issue.fix,'fix');card.append(fix);root.append(card)}}
+byId('filters').addEventListener('click',e=>{const target=e.target.closest('button[data-filter]');if(target){filter=target.dataset.filter;renderIssues()}});
+function back(){byId('editor').classList.remove('hidden');byId('results').classList.remove('visible');byId('nav-analyze').classList.add('active');byId('nav-report').classList.remove('active');window.location.hash='app'}
+byId('back').onclick=back;byId('nav-analyze').onclick=back;byId('nav-report').onclick=()=>{if(report)showReport();else toast('Analyze a workflow to generate a report.')};
+byId('download').onclick=()=>{if(!report)return;const safe={...report,generatedAt:new Date().toISOString()};const url=URL.createObjectURL(new Blob([JSON.stringify(safe,null,2)],{type:'application/json'}));const a=node('a');a.href=url;a.download='flowdoctor-report.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),500);toast('Report downloaded')};
+</script></body></html>
