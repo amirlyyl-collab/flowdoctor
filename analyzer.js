@@ -1,14 +1,15 @@
+
 const MAX_BYTES = 2 * 1024 * 1024;
 const isObject = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 
-export function analyzeText(text) {
+function analyzeText(text) {
   if (new TextEncoder().encode(text).length > MAX_BYTES) throw new Error('File exceeds the 2 MB limit.');
   let data;
   try { data = JSON.parse(text); } catch { throw new Error('Invalid JSON. Export a workflow from n8n and try again.'); }
   return analyzeWorkflow(data);
 }
 
-export function analyzeWorkflow(data) {
+function analyzeWorkflow(data) {
   if (!isObject(data) || !Array.isArray(data.nodes) || !isObject(data.connections)) {
     throw new Error('This does not look like an n8n workflow: nodes[] and connections{} are required.');
   }
@@ -38,7 +39,7 @@ export function analyzeWorkflow(data) {
       add('UNKNOWN_SOURCE', 'High', source, 'Connection source missing', 'A connection refers to a source not present in the workflow.', 'Remove the broken connection or restore its source node.');
     }
     if (!isObject(outputs)) continue;
-    for (const groups of Object.values(outputs)) {
+    for (const [kind, groups] of Object.entries(outputs)) {
       if (!Array.isArray(groups)) continue;
       for (const targets of groups) {
         if (!Array.isArray(targets)) continue;
@@ -47,6 +48,7 @@ export function analyzeWorkflow(data) {
           if (!names.has(target.node)) {
             add('UNKNOWN_TARGET', 'High', source, 'Connection target missing', `Target node '${target.node}' is not present.`, 'Reconnect the source to an existing node.');
           } else {
+            if (kind !== "main") continue;
             if (!edges.has(source)) edges.set(source, new Set());
             edges.get(source).add(target.node);
             indegree.set(target.node, (indegree.get(target.node) || 0) + 1);
@@ -55,6 +57,7 @@ export function analyzeWorkflow(data) {
       }
     }
   }
+  const resources = new Set(Object.entries(data.connections).filter(([_, out]) => isObject(out) && Object.keys(out).some(k => k.startsWith("ai_"))).map(([name]) => name));
   const triggerNodes = nodes.filter(n => isObject(n) && typeof n.type === 'string' && (/trigger/i.test(n.type) || /webhook/i.test(n.type)) && !n.disabled).map(n => n.name);
   if (!nodes.length) add('EMPTY', 'Medium', 'Workflow', 'Empty workflow', 'No nodes were found.', 'Add a trigger and action nodes.');
   if (nodes.length && !triggerNodes.length) add('NO_TRIGGER', 'Medium', 'Workflow', 'No recognizable trigger', 'No enabled trigger was identified by the simple type-name rule; manual execution or custom triggers may be intentional.', 'Confirm how the workflow is started.', 'heuristic');
@@ -68,13 +71,13 @@ export function analyzeWorkflow(data) {
   }
   if (triggerNodes.length) {
     for (const n of nodes) {
-      if (isObject(n) && typeof n.name === 'string' && !n.disabled && !visited.has(n.name)) {
+      if (isObject(n) && typeof n.name === 'string' && !n.disabled && !resources.has(n.name) && !visited.has(n.name)) {
         add('UNREACHABLE', 'Medium', n.name, 'Node not reachable from detected triggers', 'No connection path from an identified trigger reaches this node.', 'Review the wiring; separate or manually invoked branches may be intentional.', 'heuristic');
       }
     }
   }
   const errorConfigured = isObject(data.settings) && typeof data.settings.errorWorkflow === 'string' && data.settings.errorWorkflow.length > 0;
-  if (nodes.length && !errorConfigured) add('ERROR_WORKFLOW', 'Low', 'Workflow', 'No error workflow configured', 'The exported settings do not reference an error workflow. This may be intentional.', 'Consider an error workflow for notifications and recovery.', 'heuristic');
+  if (nodes.length && isObject(data.settings) && !errorConfigured) add('ERROR_WORKFLOW', 'Low', 'Workflow', 'No error workflow configured', 'The exported settings do not reference an error workflow. This may be intentional.', 'Consider an error workflow for notifications and recovery.', 'heuristic');
   for (const n of nodes) {
     if (!isObject(n) || typeof n.type !== 'string' || typeof n.name !== 'string') continue;
     if (/httpRequest/i.test(n.type) && n.retryOnFail !== true) {
@@ -92,6 +95,30 @@ export function analyzeWorkflow(data) {
     }
     if (scanFields(n.parameters)) add('POSSIBLE_SECRET', 'High', n.name, 'Possible embedded secret', 'A sensitive-looking parameter name contains a string value. This is not proof of a live credential.', 'Review locally and use n8n credentials or environment variables where appropriate.', 'heuristic');
   }
+  // Additional static and heuristic checks. Never execute expressions or node code.
+  for (const n of nodes) {
+    if (!isObject(n) || typeof n.name !== 'string' || typeof n.type !== 'string') continue;
+    if (n.disabled === true) continue;
+    if (/webhook/i.test(n.type) && isObject(n.parameters) && n.parameters.httpMethod === 'GET' && /response/i.test(JSON.stringify(n.parameters.responseMode || ''))) {
+      add('WEBHOOK_RESPONSE_REVIEW', 'Low', n.name, 'Review webhook response behavior', 'The webhook uses GET with a response configuration that may need review.', 'Verify the expected response mode and authentication in n8n.', 'heuristic');
+    }
+    if (/httpRequest/i.test(n.type) && isObject(n.parameters)) {
+      const method = String(n.parameters.method || 'GET').toUpperCase();
+      if (['POST','PATCH','DELETE'].includes(method) && n.retryOnFail === true) {
+        add('NON_IDEMPOTENT_RETRY', 'Medium', n.name, 'Retry on potentially non-idempotent request', 'Retries may repeat a state-changing HTTP request.', 'Verify idempotency keys or server-side deduplication before enabling retries.', 'heuristic');
+      }
+      if (n.parameters.authentication === 'none' && /authorization|token|secret/i.test(JSON.stringify(Object.keys(n.parameters)))) {
+        add('AUTH_REVIEW', 'Low', n.name, 'Review HTTP authentication setup', 'Authentication is marked none but parameter names suggest authorization-related settings.', 'Confirm the request uses the intended secure authentication mechanism.', 'heuristic');
+      }
+    }
+    if (n.continueOnFail === true) {
+      add('CONTINUE_ON_FAIL', 'Low', n.name, 'Node continues after failure', 'This node is configured to continue after an error, which can hide a failure downstream.', 'Check that later nodes handle error-shaped output safely.', 'heuristic');
+    }
+  }
+  for (const n of nodes) {
+    if (!isObject(n) || n.disabled || !/httpRequest/i.test(n.type || "") || !isObject(n.parameters)) continue;
+    if (typeof n.parameters.url === "string" && !n.parameters.url.trim()) add("EMPTY_HTTP_URL", "Medium", n.name, "Empty HTTP URL", "The exported URL is an empty string.", "Verify the URL in n8n.");
+  }
   const order = { Critical: 0, High: 1, Medium: 2, Low: 3 };
   issues.sort((a, b) => order[a.severity] - order[b.severity]);
   return {
@@ -103,3 +130,6 @@ export function analyzeWorkflow(data) {
     disclaimer: 'Static checks only. No execution, dependency validation or guarantee of security or correctness.'
   };
 }
+
+
+if(typeof module!=="undefined") module.exports={analyzeText,analyzeWorkflow};
